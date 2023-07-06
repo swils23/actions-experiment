@@ -1,0 +1,28 @@
+# apply changes with 'kubectl apply -f runnerdeployment.yaml'
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: example-runner-deployment
+spec:
+  template:
+    spec:
+      repository: swils23/actions-experiment
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: example-runner-deployment-autoscaler
+spec:
+  scaleDownDelaySecondsAfterScaleOut: 60
+  scaleTargetRef:
+    kind: RunnerDeployment
+    # # In case the scale target is RunnerSet:
+    # kind: RunnerSet
+    name: example-runner-deployment
+  minReplicas: 0
+  maxReplicas: 5
+  metrics:
+  - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
+    repositoryNames:
+    # A repository name is the REPO part of `github.com/OWNER/REPO`
+    - actions-experiment
