@@ -1,7 +1,9 @@
 ### Optional
-##### Alias
+##### Helpful aliases
 ```shell
-echo "alias k=kubectl" >> ~/.bashrc && source ~/.bashrc
+grep -qxF 'alias k="kubectl"' ~/.bashrc || echo 'alias k="kubectl"' >> ~/.bashrc
+grep -qxF 'alias kg="kubectl get"' ~/.bashrc || echo 'alias kg="kubectl get"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ### Prerequisites
