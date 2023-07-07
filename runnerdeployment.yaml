@@ -1,4 +1,6 @@
-# apply changes with 'kubectl apply -f runnerdeployment.yaml'
+# This is the default configuration I came up with...
+# It uses polling which isn't ideal but it works, you can change the polling period by specifying an arg to the controller.
+
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
@@ -13,37 +15,17 @@ kind: HorizontalRunnerAutoscaler
 metadata:
   name: actions-runner-autoscaler
 spec:
-  minReplicas: 1
-  maxReplicas: 10
+  scaleDownDelaySecondsAfterScaleOut: 60
   scaleTargetRef:
     kind: RunnerDeployment
     # # In case the scale target is RunnerSet:
     # kind: RunnerSet
     name: actions-runner
-  scaleUpTriggers:
-    - githubEvent:
-        workflowJob: {}
-      duration: "30m"
-
-
-
-
-# spec:
-#   # scaleDownDelaySecondsAfterScaleOut: 60
-#   scaleTargetRef:
-#     kind: RunnerDeployment
-#     # # In case the scale target is RunnerSet:
-#     # kind: RunnerSet
-#     name: actions-runner
-#   minReplicas: 6
-#   maxReplicas: 10
-#   # scaleUpTriggers:
-#   #   - githubEvent:
-#   #       workflowJob: {}
-#   #     duration: "30m"
-#   metrics:
-#   - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
-#     repositoryNames:
-#     # A repository name is the REPO part of `github.com/OWNER/REPO`
-#     - actions-experiment
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
+    repositoryNames:
+    # A repository name is the REPO part of `github.com/OWNER/REPO`
+    - actions-experiment
     
