@@ -60,7 +60,7 @@ kubectl create secret generic controller-manager -n actions-runner-system --from
 ```shell
 nano runnerdeployment.yaml
 ```
-##### Sample config
+##### Example config
 ```yaml
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
@@ -98,8 +98,8 @@ kubectl apply -f runnerdeployment.yaml
 
 ## Configuration (Automatic)
 
-Copies the sample config [runnerdeployment.yaml](https://raw.githubusercontent.com/swils23/actions-runner-controller/main/runnerdeployment.yaml) to a file called `runnerdeployment.yaml` in the current directory, then applies it to the cluster.
+Downloads the sample [runnerdeployment.yaml](https://raw.githubusercontent.com/swils23/utils/main/actions-experiment/runnerdeployment.yaml) then applies it to the cluster.
 
 ```shell
-curl -LO https://raw.githubusercontent.com/swils23/actions-runner-controller/main/runnerdeployment.yaml && kubectl apply -f runnerdeployment.yaml
+curl -LO https://raw.githubusercontent.com/swils23/utils/main/actions-experiment/runnerdeployment.yaml && kubectl apply -f runnerdeployment.yaml
 ```
