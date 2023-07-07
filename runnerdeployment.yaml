@@ -18,14 +18,12 @@ spec:
   scaleDownDelaySecondsAfterScaleOut: 60
   scaleTargetRef:
     kind: RunnerDeployment
-    # # In case the scale target is RunnerSet:
-    # kind: RunnerSet
     name: actions-runner
   minReplicas: 1
   maxReplicas: 10
   metrics:
   - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
     repositoryNames:
-    # A repository name is the REPO part of `github.com/OWNER/REPO`
+    # A repository name is the REPO part of `github.com/OWNER/REPO` = swils23/actions-experiment
     - actions-experiment
     

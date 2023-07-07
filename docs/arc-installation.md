@@ -56,7 +56,7 @@ kubectl create secret generic controller-manager -n actions-runner-system --from
 ```
 
 
-## Configuration (Manual)
+## Controller Deployment (Manual)
 
 ##### Create config
 ```shell
@@ -98,10 +98,37 @@ kubectl apply -f runnerdeployment.yaml
 
 
 
-## Configuration (Automatic)
+## Controller Deployment (Automatic)
 
 Downloads the sample [runnerdeployment.yaml](https://raw.githubusercontent.com/swils23/utils/main/actions-experiment/runnerdeployment.yaml) then applies it to the cluster.
 
 ```shell
 curl -LO https://raw.githubusercontent.com/swils23/utils/main/actions-experiment/runnerdeployment.yaml && kubectl apply -f runnerdeployment.yaml
 ```
+
+# Additional Controller Configuration (***Optional***)
+
+### Working with the controller deployment
+**Note:** Controller launch args are found under `spec.template.spec.containers.args` in the the `arc-controller.yaml` file.
+```shell
+kubectl get deployment actions-runner-controller -n actions-runner-system -o yaml > arc-controller.yaml # Get current config
+vi arc-controller.yaml # Edit config, feel free to use nano... vim is scary :)
+kubectl apply -f arc-controller.yaml -n actions-runner-system # Apply changes
+```
+
+
+### Some helpful controller launch args
+
+```yaml
+# Interval between each check for new workflows/jobs
+# NOTE: If this is too low, you will get rate limited by GitHub, if it is too high
+#       you will have a greater delay auto-scaling up/down for new jobs.
+--sync-period=10s # default 1m
+```
+
+View current rate limit with 
+
+```shell
+curl -i -u <GITHUB_USERNAME>:<GITHUB_PERSONAL_ACCESS_TOKEN> https://api.github.com/rate_limit
+```
+
