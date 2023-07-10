@@ -116,13 +116,13 @@ curl -LO https://raw.githubusercontent.com/swils23/utils/main/actions-experiment
 ## Additional Controller Configuration (***Optional***)
 
 ### Working with the controller deployment
-**Note:** Controller launch args are found under `spec.template.spec.containers.args` in the the `arc-controller.yaml` file.
+
 ```shell
 kubectl get deployment actions-runner-controller -n actions-runner-system -o yaml > arc-controller.yaml # Get current config
 vi arc-controller.yaml # Edit config, feel free to use nano... vim is scary :)
 kubectl apply -f arc-controller.yaml -n actions-runner-system # Apply changes
 ```
-
+<sub>**Note:** Controller launch args are found under `spec.template.spec.containers.args` in the the `arc-controller.yaml` file.</sub>
 
 ### Some helpful controller launch args
 
